@@ -24,7 +24,7 @@ By default it auto ejects the following items:
 # Features
 - Killswitch with Hotkey:   
 
-	Lets you turn Auto Eject on or off instantly without opening the config screen.
+	Lets you turn Auto Eject on or off instantly by pressin `.` without opening the config screen.
 - Customizable Eject List:  
 
 	You choose which items are ejected.
