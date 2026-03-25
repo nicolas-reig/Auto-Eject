@@ -23,12 +23,27 @@ public final class AutoEjectConfig {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("auto-eject.json");
 	public static final List<String> DEFAULT_ITEMS = List.of(
+		"rotten_flesh",
+		"poisonous_potato",
+		"pufferfish",
+		"egg",
+		"blue_egg",
 		"diorite",
+		"andesite",
 		"granite",
-		"andesite"
+		"warped_roots",
+		"nether_sprouts",
+		"crimson_roots",
+		"oxeye_daisy",
+		"poppy",
+		"dandelion",
+		"azure_bluet",
+		"leaf_litter",
+		"lily_pad"
 	);
 
 	public boolean enabled = true;
+	public Boolean excludeHotbar = Boolean.TRUE;
 	public List<String> items = new ArrayList<>(DEFAULT_ITEMS);
 
 	public static AutoEjectConfig load() {
@@ -40,6 +55,10 @@ public final class AutoEjectConfig {
 			AutoEjectConfig config = GSON.fromJson(reader, AutoEjectConfig.class);
 			if (config == null) {
 				return defaults();
+			}
+
+			if (config.excludeHotbar == null) {
+				config.excludeHotbar = Boolean.TRUE;
 			}
 
 			config.items = parseItems(String.join(",", config.items));
@@ -104,9 +123,13 @@ public final class AutoEjectConfig {
 			normalized = normalized.substring("minecraft:".length());
 		}
 
-		Identifier id = normalized.contains(":")
-			? Identifier.tryParse(normalized)
-			: Identifier.withDefaultNamespace(normalized);
+		Identifier id;
+		if (normalized.contains(":")) {
+			id = Identifier.tryParse(normalized);
+		} else {
+			id = Identifier.withDefaultNamespace(normalized);
+		}
+
 		if (id == null) {
 			return null;
 		}

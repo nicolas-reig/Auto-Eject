@@ -29,6 +29,10 @@ By default it auto ejects the following items:
 
 	You choose which items are ejected.
 
+- Skip Hotbar:
+
+	Optional toggle to dont auto-eject itmes on the hotbar (on by defaul).
+
 # Config
 Configurations are available through the mod menu.
 

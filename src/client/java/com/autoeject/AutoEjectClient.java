@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import org.lwjgl.glfw.GLFW;
 
 public class AutoEjectClient implements ClientModInitializer {
+	private static final int HOTBAR_SIZE = 9;
 	private static final AutoEjectConfig CONFIG = AutoEjectConfig.load();
 	private static final KeyMapping TOGGLE_KEY = new KeyMapping(
 		"Toggle Auto Eject",
@@ -59,6 +60,10 @@ public class AutoEjectClient implements ClientModInitializer {
 				continue;
 			}
 
+			if (shouldSkipHotbarSlot(slot)) {
+				continue;
+			}
+
 			if (!shouldAutoEject(slot.getItem().getItem())) {
 				continue;
 			}
@@ -74,23 +79,34 @@ public class AutoEjectClient implements ClientModInitializer {
 		}
 	}
 
+	private boolean shouldSkipHotbarSlot(Slot slot) {
+		if (!Boolean.TRUE.equals(CONFIG.excludeHotbar)) {
+			return false;
+		}
+
+		return slot.getContainerSlot() >= 0 && slot.getContainerSlot() < HOTBAR_SIZE;
+	}
+
 	private boolean shouldAutoEject(Item item) {
 		Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
 		if (itemId == null) {
 			return false;
 		}
 
-		return "minecraft".equals(itemId.getNamespace())
-			? CONFIG.items.contains(itemId.getPath())
-			: CONFIG.items.contains(itemId.toString());
+		if ("minecraft".equals(itemId.getNamespace())) {
+			return CONFIG.items.contains(itemId.getPath());
+		}
+
+		return CONFIG.items.contains(itemId.toString());
 	}
 
 	public static AutoEjectConfig getConfig() {
 		return CONFIG;
 	}
 
-	public static void updateConfig(boolean enabled, String itemsText, String toggleKeyName) {
+	public static void updateConfig(boolean enabled, boolean excludeHotbar, String itemsText, String toggleKeyName) {
 		CONFIG.enabled = enabled;
+		CONFIG.excludeHotbar = excludeHotbar;
 		CONFIG.setItemsFromText(itemsText);
 		CONFIG.save();
 		setToggleKey(toggleKeyName);

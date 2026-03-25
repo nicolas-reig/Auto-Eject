@@ -20,12 +20,14 @@ public final class AutoEjectConfigScreen extends Screen {
 
 	private final Screen parent;
 	private boolean enabledValue = AutoEjectClient.getConfig().enabled;
+	private boolean excludeHotbarValue = Boolean.TRUE.equals(AutoEjectClient.getConfig().excludeHotbar);
 	private final List<String> itemValues = new ArrayList<>(AutoEjectClient.getConfig().items);
 	private String toggleKeyNameValue = AutoEjectClient.getToggleKeyName();
 	private boolean listeningForToggleKey;
 
 	private EditBox itemsInput;
 	private Button enabledButton;
+	private Button excludeHotbarButton;
 	private Button toggleKeyButton;
 	private Button addItemButton;
 	private Button removeItemButton;
@@ -94,8 +96,15 @@ public final class AutoEjectConfigScreen extends Screen {
 		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
 
 		rowY += rowHeight;
-		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Item List"), font)), rowY + 5);
-		itemsInput = addScrollableWidget(addRenderableWidget(new EditBox(font, fieldX, rowY, fieldWidth - addButtonWidth - 5, controlHeight, Component.literal("minecraft:item"))), rowY);
+		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Skip Hotbar"), font)), rowY + 5);
+		excludeHotbarButton = addScrollableWidget(addRenderableWidget(Button.builder(hotbarLabel(), button -> {
+			excludeHotbarValue = !excludeHotbarValue;
+			button.setMessage(hotbarLabel());
+		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
+
+		rowY += rowHeight;
+		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Eject List"), font)), rowY + 5);
+		itemsInput = addScrollableWidget(addRenderableWidget(new EditBox(font, fieldX, rowY, fieldWidth - addButtonWidth - 5, controlHeight, Component.literal("unwanted_item"))), rowY);
 		itemsInput.setMaxLength(128);
 		itemsInput.setHint(Component.literal("unwanted_item"));
 		addItemButton = addScrollableWidget(addRenderableWidget(Button.builder(Component.literal("Add"), button -> addItemEntry())
@@ -182,8 +191,21 @@ public final class AutoEjectConfigScreen extends Screen {
 	}
 
 	private void saveAndClose() {
-		AutoEjectClient.updateConfig(enabledValue, String.join(", ", itemValues), toggleKeyNameValue);
+		AutoEjectClient.updateConfig(enabledValue, excludeHotbarValue, String.join(", ", itemValues), toggleKeyNameValue);
 		onClose();
+	}
+
+	private Component hotbarLabel() {
+		String stateText;
+		ChatFormatting stateColor;
+
+		if (excludeHotbarValue) {
+			stateText = "On";
+		} else {
+			stateText = "Off";
+		}
+
+		return Component.literal(stateText);
 	}
 
 	private Component toggleKeyLabel() {
@@ -284,9 +306,11 @@ public final class AutoEjectConfigScreen extends Screen {
 
 	private Component itemLabel(int index) {
 		String value = itemValues.get(index);
-		return index == selectedItemIndex
-			? Component.literal("> " + value + " <").withStyle(ChatFormatting.YELLOW)
-			: Component.literal(value);
+		if (index == selectedItemIndex) {
+			return Component.literal("> " + value + " <").withStyle(ChatFormatting.YELLOW);
+		}
+
+		return Component.literal(value);
 	}
 
 	private int clampScroll(int value) {
