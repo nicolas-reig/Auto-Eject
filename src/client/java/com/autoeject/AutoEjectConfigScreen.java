@@ -2,7 +2,6 @@ package com.autoeject;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.StringWidget;
@@ -44,7 +43,6 @@ public final class AutoEjectConfigScreen extends Screen {
 	private int layoutControlHeight;
 	private int layoutItemsTop;
 	private int selectedItemIndex = -1;
-	private MainScrollBar mainScrollBar;
 
 	public AutoEjectConfigScreen(Screen parent) {
 		super(TITLE);
@@ -80,7 +78,6 @@ public final class AutoEjectConfigScreen extends Screen {
 		scrollAreaBottom = buttonsY - 8;
 
 		addRenderableOnly(new StringWidget(centerX - (titleWidth / 2), titleY, titleWidth, controlHeight, title, font));
-		mainScrollBar = addRenderableOnly(new MainScrollBar(panelLeft + panelWidth + 8, scrollAreaTop, 6, scrollAreaBottom - scrollAreaTop));
 
 		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Kill Switch"), font)), rowY + 5);
 		enabledButton = addScrollableWidget(addRenderableWidget(Button.builder(toggleLabel(), button -> {
@@ -324,9 +321,6 @@ public final class AutoEjectConfigScreen extends Screen {
 			widget.widget.visible = visible;
 			widget.widget.setY(y);
 		}
-		if (mainScrollBar != null) {
-			mainScrollBar.visible = maxScroll > 0;
-		}
 	}
 
 	private <T extends net.minecraft.client.gui.components.AbstractWidget> T addScrollableWidget(T widget, int baseY) {
@@ -350,31 +344,6 @@ public final class AutoEjectConfigScreen extends Screen {
 		private ScrollableWidget(net.minecraft.client.gui.components.AbstractWidget widget, int baseY) {
 			this.widget = widget;
 			this.baseY = baseY;
-		}
-	}
-
-	private final class MainScrollBar extends net.minecraft.client.gui.components.AbstractWidget {
-		private MainScrollBar(int x, int y, int width, int height) {
-			super(x, y, width, height, Component.empty());
-			this.active = false;
-		}
-
-		@Override
-		protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-			if (maxScroll <= 0) {
-				return;
-			}
-
-			graphics.fill(getX(), getY(), getRight(), getBottom(), 0x80303030);
-
-			int thumbHeight = Math.max(18, (getHeight() * getHeight()) / (getHeight() + maxScroll));
-			int thumbTravel = Math.max(0, getHeight() - thumbHeight);
-			int thumbY = getY() + (thumbTravel * scrollOffset / maxScroll);
-			graphics.fill(getX() + 1, thumbY, getRight() - 1, thumbY + thumbHeight, 0xC0FFFFFF);
-		}
-
-		@Override
-		protected void updateWidgetNarration(net.minecraft.client.gui.narration.NarrationElementOutput narrationElementOutput) {
 		}
 	}
 }

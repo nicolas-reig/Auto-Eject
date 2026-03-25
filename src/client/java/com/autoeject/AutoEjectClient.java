@@ -1,9 +1,9 @@
 package com.autoeject;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
@@ -12,23 +12,27 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import org.lwjgl.glfw.GLFW;
 
 public class AutoEjectClient implements ClientModInitializer {
+	private static final KeyMapping.Category KEY_CATEGORY = new KeyMapping.Category(
+		Identifier.fromNamespaceAndPath("auto-eject", "controls")
+	);
 	private static final int HOTBAR_SIZE = 9;
 	private static final AutoEjectConfig CONFIG = AutoEjectConfig.load();
 	private static final KeyMapping TOGGLE_KEY = new KeyMapping(
-		"Toggle Auto Eject",
+		"key.auto-eject.toggle",
+		InputConstants.Type.KEYSYM,
 		GLFW.GLFW_KEY_PERIOD,
-		KeyMapping.Category.MISC
+		KEY_CATEGORY
 	);
 
 	@Override
 	public void onInitializeClient() {
-		KeyBindingHelper.registerKeyBinding(TOGGLE_KEY);
+		KeyMappingHelper.registerKeyMapping(TOGGLE_KEY);
 		ClientTickEvents.END_CLIENT_TICK.register(this::tickClient);
 	}
 
@@ -37,7 +41,7 @@ public class AutoEjectClient implements ClientModInitializer {
 			CONFIG.enabled = !CONFIG.enabled;
 			CONFIG.save();
 			if (client.player != null) {
-				client.player.displayClientMessage(toggleMessage(), true);
+				client.player.sendOverlayMessage(toggleMessage());
 			}
 		}
 
@@ -68,11 +72,11 @@ public class AutoEjectClient implements ClientModInitializer {
 				continue;
 			}
 
-			client.gameMode.handleInventoryMouseClick(
+			client.gameMode.handleContainerInput(
 				menu.containerId,
 				slotIndex,
 				1,
-				ClickType.THROW,
+				ContainerInput.THROW,
 				client.player
 			);
 			return;
