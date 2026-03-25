@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "auto-eject",
+	"version": "${version}",
+	"name": "Auto Eject",
+	"description": "Client-side automatic item dropper.",
+	"authors": [
+		"nreigs"
+	],
+	"contact": {
+		"sources": "https://github.com/nreigs/Auto-Eject"
+	},
+	"license": "MIT",
+	"icon": "assets/auto-eject/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.autoeject.AutoEjectClient"
+		],
+		"modmenu": [
+			"com.autoeject.ModMenuIntegration"
+		]
+	},
+	"suggests": {
+		"modmenu": "*"
+	},
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
