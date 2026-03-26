@@ -84,6 +84,7 @@ public final class AutoEjectConfigScreen extends Screen {
 			enabledValue = !enabledValue;
 			button.setMessage(toggleLabel());
 		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
+		enabledButton.setTooltip(Tooltip.create(Component.literal("Turns automatic ejection completely off.")));
 
 		rowY += rowHeight;
 		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Toggle Key"), font)), rowY + 5);
@@ -98,12 +99,14 @@ public final class AutoEjectConfigScreen extends Screen {
 			excludeHotbarValue = !excludeHotbarValue;
 			button.setMessage(hotbarLabel());
 		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
+		excludeHotbarButton.setTooltip(Tooltip.create(Component.literal("Leaves slots 1-9 untouched.")));
 
 		rowY += rowHeight;
 		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Eject List"), font)), rowY + 5);
 		itemsInput = addScrollableWidget(addRenderableWidget(new EditBox(font, fieldX, rowY, fieldWidth - addButtonWidth - 5, controlHeight, Component.literal("unwanted_item"))), rowY);
 		itemsInput.setMaxLength(128);
 		itemsInput.setHint(Component.literal("unwanted_item"));
+		itemsInput.setTooltip(Tooltip.create(Component.literal("Use item IDs like rotten_flesh or mod:item.")));
 		addItemButton = addScrollableWidget(addRenderableWidget(Button.builder(Component.literal("Add"), button -> addItemEntry())
 			.bounds(fieldX + fieldWidth - addButtonWidth, rowY, addButtonWidth, controlHeight)
 			.build()), rowY);
@@ -264,7 +267,6 @@ public final class AutoEjectConfigScreen extends Screen {
 			Button entryButton = addRenderableWidget(Button.builder(itemLabel(index), button -> selectItemEntry(index))
 				.bounds(layoutFieldX, rowY, layoutFieldWidth, layoutControlHeight)
 				.build());
-			entryButton.setTooltip(Tooltip.create(Component.literal(itemValues.get(index))));
 			addScrollableWidget(entryButton, rowY);
 			itemEntryButtons.add(entryButton);
 			rowY += layoutControlHeight + 2;
