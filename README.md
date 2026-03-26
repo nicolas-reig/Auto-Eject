@@ -31,7 +31,9 @@ By default it auto ejects the following items:
 
 - Skip Hotbar:
 
-	Optional toggle to dont auto-eject itmes on the hotbar (on by defaul).
+	Optional toggle to dont auto-eject itmes on the hotbar (off by default).    
+
+#### Want to see a feature implemented? Please make a [feaure request](https://github.com/nicolas-reig/Auto-Eject/issues/new?labels=feature%20request).
 
 # Config
 Configurations are available through the mod menu.

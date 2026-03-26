@@ -43,7 +43,7 @@ public final class AutoEjectConfig {
 	);
 
 	public boolean enabled = true;
-	public Boolean excludeHotbar = Boolean.TRUE;
+	public Boolean excludeHotbar = Boolean.FALSE;
 	public List<String> items = new ArrayList<>(DEFAULT_ITEMS);
 
 	public static AutoEjectConfig load() {
@@ -58,7 +58,7 @@ public final class AutoEjectConfig {
 			}
 
 			if (config.excludeHotbar == null) {
-				config.excludeHotbar = Boolean.TRUE;
+				config.excludeHotbar = Boolean.FALSE;
 			}
 
 			config.items = parseItems(String.join(",", config.items));

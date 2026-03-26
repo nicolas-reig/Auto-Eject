@@ -18,9 +18,7 @@ import net.minecraft.world.item.Item;
 import org.lwjgl.glfw.GLFW;
 
 public class AutoEjectClient implements ClientModInitializer {
-	private static final KeyMapping.Category KEY_CATEGORY = new KeyMapping.Category(
-		Identifier.fromNamespaceAndPath("auto-eject", "controls")
-	);
+	private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.MISC;
 	private static final int HOTBAR_SIZE = 9;
 	private static final AutoEjectConfig CONFIG = AutoEjectConfig.load();
 	private static final KeyMapping TOGGLE_KEY = new KeyMapping(
