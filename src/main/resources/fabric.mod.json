@@ -3,12 +3,14 @@
 	"id": "auto-eject",
 	"version": "${version}",
 	"name": "Auto Eject",
-	"description": "Client-side automatic item dropper.",
+	"description": "Client-side automatic item ejection.",
 	"authors": [
-		"nreigs"
+		"Nicolas Reig Serrano"
 	],
 	"contact": {
-		"sources": "https://github.com/nreigs/Auto-Eject"
+		"homepage": "https://modrinth.com/mod/auto-eject/versions",
+		"issues": "https://github.com/nicolas-reig/Auto-Eject/issues",
+		"sources": "https://github.com/nicolas-reig/Auto-Eject"
 	},
 	"license": "MIT",
 	"icon": "assets/auto-eject/icon.png",
@@ -25,8 +27,8 @@
 		"modmenu": "*"
 	},
 	"depends": {
-		"fabricloader": ">=0.18.4",
-		"minecraft": "~26.1",
+		"fabricloader": ">=0.18.6",
+		"minecraft": "~26.1.1",
 		"java": ">=25",
 		"fabric-api": "*"
 	}
