@@ -45,4 +45,4 @@ Configurations are available through the mod menu.
 <h1><span style="color:#d73a49;">Server Warning</span></h1>
 <b>Some servers use plugins that turn your inventory into a UI (for example shops, menus, or other item-based interfaces).  
 In those cases, Auto-Eject can mistakenly drop UI items or interfere with menu interactions.  
-On large servers that use that time of interfaces (e.g. Hypixel), it is recommended to turn Auto-Eject off while using those plugin/UIs.</b>
+On large servers that use that tipe of interfaces (e.g. Hypixel), it is recommended to turn Auto-Eject off while using those plugin/UIs.</b>
