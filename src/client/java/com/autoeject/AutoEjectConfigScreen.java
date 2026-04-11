@@ -94,12 +94,12 @@ public final class AutoEjectConfigScreen extends Screen {
 		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
 
 		rowY += rowHeight;
-		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Don't eject from Hotbar"), font)), rowY + 5);
+		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Ignore Hotbar"), font)), rowY + 5);
 		excludeHotbarButton = addScrollableWidget(addRenderableWidget(Button.builder(hotbarLabel(), button -> {
 			excludeHotbarValue = !excludeHotbarValue;
 			button.setMessage(hotbarLabel());
 		}).bounds(fieldX, rowY, fieldWidth, controlHeight).build()), rowY);
-		excludeHotbarButton.setTooltip(Tooltip.create(Component.literal("Leaves slots 1-9 untouched.")));
+		excludeHotbarButton.setTooltip(Tooltip.create(Component.literal("Don't eject items from the Hotbar.")));
 
 		rowY += rowHeight;
 		addScrollableWidget(addRenderableOnly(new StringWidget(left, rowY + 5, leftWidth, controlHeight, Component.literal("Eject List"), font)), rowY + 5);
