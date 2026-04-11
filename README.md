@@ -31,7 +31,7 @@ By default it auto ejects the following items:
 
 - Skip Hotbar:
 
-	Optional toggle to dont auto-eject itmes on the hotbar (off by default).    
+	Optional toggle to dont auto-eject itmes on the hotbar (off by defaul).    
 
 #### Want to see a feature implemented? Please make a [feaure request](https://github.com/nicolas-reig/Auto-Eject/issues/new?labels=feature%20request).
 
@@ -39,10 +39,13 @@ By default it auto ejects the following items:
 
 # Config
 Configurations are available through the mod menu.
-
-[Download](https://modrinth.com/mod/auto-eject)
+<img src="https://cdn.modrinth.com/data/Moumtpxx/images/217cd27dcbd0e6dcaeedfe719ee138f7b05478fe.png">
 
 <h1><span style="color:#d73a49;">Server Warning</span></h1>
 <b>Some servers use plugins that turn your inventory into a UI (for example shops, menus, or other item-based interfaces).  
 In those cases, Auto-Eject can mistakenly drop UI items or interfere with menu interactions.  
 On large servers that use that tipe of interfaces (e.g. Hypixel), it is recommended to turn Auto-Eject off while using those plugin/UIs.</b>
+
+<br>
+
+# [Download](https://modrinth.com/mod/auto-eject/versions)
